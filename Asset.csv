@@ -1,2 +1,2 @@
-﻿Name,Type,Description,Value
-UiBank_URL2,Text,UiBank URL,https://uibank.uipath.com/welcome
+﻿Name,Type,Value,Description
+UiBank_URL2,Text,https://uibank.uipath.com/welcome,UiBank URL
