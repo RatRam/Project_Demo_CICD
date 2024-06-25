@@ -1,0 +1,39 @@
+trigger:
+- main
+
+pool:
+  name: Agent1-DevOps
+
+steps:
+- script: |
+  displayName: 'Install UiPath CLI'
+
+
+- task: UiPathInstallPlatform@4
+  inputs:
+    cliVersion: 'WIN_23.10.8894.39673'
+    cliNupkgPath: 
+
+
+- task: UiPathPack@4
+  inputs:
+    versionType: 'AutoVersion'
+    projectJsonPath: '$(Build.SourcesDirectory)\project.json'
+    orchestratorConnection: 'UiPathStagingCloudConnect'
+    outputPath: '$(Build.ArtifactStagingDirectory)\Output'
+    traceLevel: 'Information'
+
+- task: UiPathAssets@4
+  inputs:
+    orchestratorConnection: 'UiPathStagingCloudConnect'
+    folderName: 'DU-Projects'
+    assetActionType: 'Deploy'
+    csvFile: '$(Build.SourcesDirectory)\Asset.csv'
+    traceLevel: 'Information'
+
+- task: UiPathDeploy@4
+  inputs:
+    orchestratorConnection: 'UiPathStagingCloudConnect'
+    packagesPath: '$(Build.ArtifactStagingDirectory)\Output'
+    folderName: 'DU-Projects'
+    traceLevel: 'Information'
